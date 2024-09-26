@@ -57,5 +57,25 @@ public class ChamadosController : ControllerBase
             await connection.QueryAsync(sqlInsert, parameters);
         }
     }
+
+    [HttpPut("{id}")]
+    public async Task AtualizarChamado(int id, Chamado chamado)
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            var sqlUpdate = @"USE Chamados_DEV UPDATE CHAMADOS SET Titulo = @Titulo, Area = @Area, DataAbertura = @DataAbertura, Situacao = @Situacao WHERE ID = @ID";
+
+            var parameters = new 
+            {
+                ID = id,
+                Titulo = chamado.Titulo,
+                Area = chamado.Area,
+                DataAbertura = chamado.DataAbertura,
+                Situacao = chamado.Situacao
+            };         
+
+            await connection.ExecuteAsync(sqlUpdate, parameters);
+        }
+    }
     
 }
