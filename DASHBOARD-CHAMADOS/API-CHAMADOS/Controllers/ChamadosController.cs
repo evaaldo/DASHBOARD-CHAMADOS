@@ -77,5 +77,21 @@ public class ChamadosController : ControllerBase
             await connection.ExecuteAsync(sqlUpdate, parameters);
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task RemoverChamado(int id)
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            var sqlDelete = @"USE Chamados_DEV DELETE FROM CHAMADOS WHERE ID = @ID";
+
+            var parameters = new
+            {
+                ID = id
+            };
+
+            await connection.QueryAsync(sqlDelete, parameters);
+        }
+    }
     
 }
